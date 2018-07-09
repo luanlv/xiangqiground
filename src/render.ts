@@ -121,10 +121,7 @@ export default function render(s: State): void {
   //       {squares: squares}
   //   )
   for (const sk in squares) {
-    // console.log(
-    //   "sk",
-    //   {sk: sk}
-    // )
+
     if (!sameSquares[sk]) {
       sMvdset = movedSquares[squares[sk]];
       sMvd = sMvdset && sMvdset.pop();

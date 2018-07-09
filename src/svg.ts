@@ -174,7 +174,7 @@ function renderCircle(brush: DrawBrush, pos: cg.Pos, current: boolean, bounds: C
   // )
   const o = pos2px(pos, bounds),
   widths = circleWidth(bounds),
-  radius = (bounds.width + bounds.height) / 40;
+  radius = (bounds.width + bounds.height) / 38;
 
   return setAttributes(createElement('circle'), {
     stroke: brush.color,

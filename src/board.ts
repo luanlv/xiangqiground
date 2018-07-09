@@ -208,10 +208,15 @@ export function selectSquare(state: State, key: cg.Key, force?: boolean): void {
 
 export function setSelected(state: State, key: cg.Key): void {
   state.selected = key;
+
+
   if (isPremovable(state, key)) {
-    state.premovable.dests = premove(state.pieces, key, state.premovable.castle);
+    state.premovable.dests = premove(state.pieces, key);
   }
-  else state.premovable.dests = undefined;
+  else
+    state.premovable.dests = undefined;
+
+  // state.premovable.dests = premove(state.pieces, key);
 }
 
 export function unselect(state: State): void {
@@ -221,6 +226,7 @@ export function unselect(state: State): void {
 }
 
 function isMovable(state: State, orig: cg.Key): boolean {
+
   const piece = state.pieces[orig];
   return piece && (
     state.movable.color === 'both' || (
@@ -233,6 +239,7 @@ export function canMove(state: State, orig: cg.Key, dest: cg.Key): boolean {
   return orig !== dest && isMovable(state, orig) && (
     state.movable.free || (!!state.movable.dests && containsX(state.movable.dests[orig], dest))
   );
+  // return  orig !== dest &&  (!!state.premovable.dests && containsX(state.premovable.dests, dest));
 }
 
 function canDrop(state: State, orig: cg.Key, dest: cg.Key): boolean {
@@ -247,6 +254,7 @@ function canDrop(state: State, orig: cg.Key, dest: cg.Key): boolean {
 
 function isPremovable(state: State, orig: cg.Key): boolean {
   const piece = state.pieces[orig];
+  // return piece && state.premovable.enabled &&
   return piece && state.premovable.enabled &&
   state.movable.color === piece.color &&
     state.turnColor !== piece.color;
@@ -255,7 +263,7 @@ function isPremovable(state: State, orig: cg.Key): boolean {
 function canPremove(state: State, orig: cg.Key, dest: cg.Key): boolean {
   return orig !== dest &&
   isPremovable(state, orig) &&
-  containsX(premove(state.pieces, orig, state.premovable.castle), dest);
+  containsX(premove(state.pieces, orig), dest);
 }
 
 function canPredrop(state: State, orig: cg.Key, dest: cg.Key): boolean {
@@ -333,8 +341,8 @@ export function stop(state: State): void {
 export function getKeyAtDomPos(pos: cg.NumberPair, asWhite: boolean, bounds: ClientRect): cg.Key | undefined {
   let file = Math.ceil(9 * ((pos[0] - bounds.left) / bounds.width)) - 1;
   if (!asWhite) file = 8 - file;
+
   let rank = Math.ceil(9 - (10 * ((pos[1] - bounds.top) / bounds.height)));
   if (!asWhite) rank = 9 - rank;
-
   return (file >= 0 && file <= 8 && rank >= 0 && rank <= 9) ? pos2key([file, rank]) : undefined;
 }

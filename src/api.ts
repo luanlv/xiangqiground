@@ -7,6 +7,7 @@ import { cancel as dragCancel, dragNewPiece } from './drag'
 import { DrawShape } from './draw'
 import explosion from './explosion'
 import * as cg from './types'
+import logic from './logic'
 
 export interface Api {
 
@@ -75,6 +76,16 @@ export interface Api {
   // unbinds all events
   // (important for document-wide events like scroll and mousemove)
   destroy: cg.Unbind
+
+  logic(): {
+      check: string,
+      whiteDests: {
+          [key: string]: cg.Key[]
+      },
+      blackDests: {
+          [key: string]: cg.Key[]
+      }
+  }
 }
 
 // see API types and documentations in dts/api.d.ts
@@ -116,7 +127,6 @@ export function start(state: State, redrawAll: cg.Redraw): Api {
     },
 
     move(orig, dest) {
-        console.log('ok')
       anim(state => board.baseMove(state, orig, dest), state);
     },
 
@@ -184,6 +194,12 @@ export function start(state: State, redrawAll: cg.Redraw): Api {
       board.stop(state);
       state.dom.unbind && state.dom.unbind();
       state.dom.destroyed = true;
+    },
+
+    logic() {
+        return logic(state);
     }
-  };
+
+  }
+  ;
 }

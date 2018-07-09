@@ -29,12 +29,12 @@ export function start(s: State, e: cg.MouchEvent): void {
   bounds = s.dom.bounds(),
   position = util.eventPosition(e) as cg.NumberPair,
   orig = board.getKeyAtDomPos(position, asWhite, bounds);
-  console.log(
-      "getKeyAtDomPos",
-      {
-        orig: orig
-      }
-  )
+  // console.log(
+  //     "getKeyAtDomPos",
+  //     {
+  //       orig: orig
+  //     }
+  // )
   if (!orig) return;
   const piece = s.pieces[orig];
   const previouslySelected = s.selected;
@@ -232,17 +232,17 @@ function removeDragElements(s: State) {
 function computeSquareBounds(key: cg.Key, asWhite: boolean, bounds: ClientRect) {
   const pos = util.key2pos(key);
   if (!asWhite) {
-    pos[0] = 9 - pos[0];
-    pos[1] = 10 - pos[1];
+    pos[0] = 8 - pos[0];
+    pos[1] = 9 - pos[1];
   }
-  console.log(
-      "key - pos - bounds",
-      {
-          bounds: bounds,
-          key: key,
-          pos: pos
-      }
-  )
+  // console.log(
+  //     "key - pos - bounds",
+  //     {
+  //         bounds: bounds,
+  //         key: key,
+  //         pos: pos
+  //     }
+  // )
   return {
     left: bounds.left + bounds.width * pos[0] / 9,
     top: bounds.top + bounds.height * (9 - pos[1]) / 10,

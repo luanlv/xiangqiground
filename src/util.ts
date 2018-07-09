@@ -65,16 +65,9 @@ export const computeIsTrident = () => window.navigator.userAgent.indexOf('Triden
 const posToTranslateBase: (pos: cg.Pos, asWhite: boolean, xFactor: number, yFactor: number) => cg.NumberPair =
 (pos, asWhite, xFactor, yFactor) =>
 {
-  // console.log("posToTranslateBase",
-  //     {
-  //         pos: pos,
-  //         asWhite: asWhite,
-  //         xFactor: xFactor,
-  //         yFactor: yFactor,
-  //     })
   return [
-    (asWhite ? pos[0]: 9 - pos[0]  - 1) * xFactor,
-    (asWhite ? 10 - pos[1] - 1: pos[1] - 1) * yFactor
+    (asWhite ? pos[0]: 9 - pos[0] - 1) * xFactor,
+    (asWhite ? 10 - pos[1] - 1: pos[1]) * yFactor
   ];
 }
 export const posToTranslateAbs = (bounds: ClientRect) => {
